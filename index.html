@@ -187,6 +187,59 @@
       overflow: hidden;
     }
     .comp-panel.active { display: block; }
+
+    /* Split view for competency */
+    .comp-split {
+      display: grid; grid-template-columns: 1fr 380px; min-height: 500px;
+    }
+    .comp-table-area {
+      overflow-y: auto; max-height: 600px;
+    }
+    .comp-supplement-area {
+      border-left: 1px solid var(--border-light); background: var(--bg);
+      padding: 1.5rem; overflow-y: auto; max-height: 600px;
+    }
+    .comp-supplement-placeholder {
+      display: flex; align-items: center; justify-content: center;
+      height: 100%; color: var(--ink-muted); font-size: 0.85rem;
+      text-align: center; padding: 2rem;
+    }
+    .comp-supplement-content { display: none; }
+    .comp-supplement-content.active { display: block; }
+    .comp-supplement-content h4 {
+      font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem;
+      color: var(--ink);
+    }
+    .comp-supplement-content .supp-grade {
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600;
+      color: var(--ink-muted); letter-spacing: 0.1em; margin-bottom: 1rem;
+    }
+    .comp-supplement-content .supp-section {
+      margin-bottom: 1.5rem; padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .comp-supplement-content .supp-section:last-child {
+      border-bottom: none; margin-bottom: 0; padding-bottom: 0;
+    }
+    .comp-supplement-content .supp-label {
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 0.5rem;
+    }
+    .comp-supplement-content .supp-label.think { color: var(--accent-think); }
+    .comp-supplement-content .supp-label.act { color: var(--accent-act); }
+    .comp-supplement-content .supp-label.rel { color: var(--accent-rel); }
+    .comp-supplement-content .supp-title {
+      font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem;
+    }
+    .comp-supplement-content .supp-def {
+      font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 0.6rem;
+      padding: 0.6rem 0.8rem; background: var(--card); border-radius: var(--radius);
+      border-left: 3px solid var(--border);
+    }
+    .comp-supplement-content .supp-text {
+      font-size: 0.8rem; color: var(--ink); line-height: 1.8;
+    }
+
     .comp-detail-table { width: 100%; border-collapse: collapse; }
     .comp-detail-table th {
       text-align: left; font-size: 0.65rem; text-transform: uppercase;
@@ -199,9 +252,17 @@
       font-size: 0.82rem; vertical-align: top; line-height: 1.7;
     }
     .comp-detail-table tr:last-child td { border-bottom: none; }
-    .comp-detail-table tr:hover { background: rgba(0,0,0,0.01); }
+    .comp-detail-table tbody tr { cursor: pointer; transition: background 0.15s; }
+    .comp-detail-table tbody tr:hover { background: rgba(0,0,0,0.02); }
+    .comp-detail-table tbody tr.selected { background: var(--accent-think-bg); }
+    .comp-detail-table tbody tr.selected td:first-child { box-shadow: inset 3px 0 0 var(--accent-think); }
     .comp-subtitle {
       font-weight: 700; font-size: 0.75rem; display: block; margin-bottom: 0.3rem;
+    }
+
+    @media (max-width: 1100px) {
+      .comp-split { grid-template-columns: 1fr; }
+      .comp-supplement-area { border-left: none; border-top: 1px solid var(--border-light); max-height: none; }
     }
 
     /* ── EVALUATION ── */
@@ -589,167 +650,194 @@
 
     <!-- Panel: Thinking -->
     <div class="comp-panel active" id="panel-think">
-      <table class="comp-detail-table">
-        <thead>
-          <tr>
-            <th style="width:6%">Grade</th>
-            <th style="width:47%">A. 課題設定 (Issue Finding)</th>
-            <th style="width:47%">B. 構造化・計画 (Structuring)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="grade-label">G8</span></td>
-            <td><span class="comp-subtitle">産業構造の再定義</span>業界全体の商習慣やサプライチェーンの構造的な歪みを課題として捉え、既存の産業定義を書き換える「問い」を立てる。</td>
-            <td><span class="comp-subtitle">エコシステム構想</span>一企業では完結しないビジョンを描き、競合他社・行政・異業種を巻き込んだエコシステム全体を設計する。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G7</span></td>
-            <td><span class="comp-subtitle">事業創造と破壊</span>全社視点で既存事業の限界やリスクを見抜き、自らの手で事業をピボットさせる決断をする。サンクコストに囚われず撤退・統合の判断も行う。</td>
-            <td><span class="comp-subtitle">全社資源の最適配分</span>ヒト・モノ・カネ・情報を部門の壁を超えてダイナミックに再配分する戦略を描く。中長期的な競争優位性を確立するロードマップを策定。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G6</span></td>
-            <td><span class="comp-subtitle">構造的課題の特定</span>本部内の構造的な矛盾（サイロ化、技術的負債等）の根本原因を特定。仕組みや構造そのものを変えることで解決すべきイシューを定義する。</td>
-            <td><span class="comp-subtitle">事業ロードマップ策定</span>単年度のPL責任を超え、3〜5年スパンでの事業や組織能力の進化プロセスを設計。複数オプションを持たせた柔軟かつ強靭な計画を立案。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G5</span></td>
-            <td><span class="comp-subtitle">部門方針の策定</span>全社戦略と連動させつつ、自部門が半年〜1年で達成すべきゴールとKPIを設定。抽象的な戦略を具体的な部門目標へ落とし込む。</td>
-            <td><span class="comp-subtitle">リソース戦略</span>採用計画、予算配分、体制作りを設計。突発的なリスクや環境変化を見越してバッファや代替案を持たせた計画を組む。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G4</span></td>
-            <td><span class="comp-subtitle">プロジェクト群の最適化</span>複数チーム・プロジェクトにまたがる共通課題を発見し、横断的な解決策を提案。部長の視点を補完し、現場のリアリティを踏まえた課題設定を行う。</td>
-            <td><span class="comp-subtitle">複雑な工程の交通整理</span>依存関係が複雑な複数プロジェクトのスケジュールを統合的に管理。クリティカルパスを特定し、チーム間の干渉や手戻りを防ぐ全体工程表を描く。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G3</span></td>
-            <td><span class="comp-subtitle">チーム課題の発見</span>チームの目標達成を阻害する要因（スキル不足、ツール不備、士気低下等）を特定。上司から言われる前に現場レベルでの改善テーマを自ら設定する。</td>
-            <td><span class="comp-subtitle">実行プランの具体化</span>チーム目標を個人タスクに分解し、誰が・いつまでに・何をやるかを明確にする。メンバーの能力を考慮した現実的なスケジュールと役割分担を組む。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G2</span></td>
-            <td><span class="comp-subtitle">自律的な解決策提示</span>困難な壁にぶつかっても自分で調べ、考え、複数の解決案（松竹梅）を持って上司に相談できる。「こうしたい」を提案する。</td>
-            <td><span class="comp-subtitle">ロジカルな段取り</span>複雑なタスクでもロジックに基づいて手順を組み立て、効率的に進める段取りができる。自分の作業の依存関係を理解し、他者を待たせない工夫をする。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G1</span></td>
-            <td><span class="comp-subtitle">違和感のアラート</span>業務遂行中に発生した小さな違和感や異常を放置せず、速やかに報告・相談できる。</td>
-            <td><span class="comp-subtitle">手順の理解と遵守</span>指示された業務の背景・目的・手順を正しく理解し、マニュアルやルールに沿って忠実に計画をなぞることができる。</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="comp-split">
+        <div class="comp-table-area">
+          <table class="comp-detail-table">
+            <thead>
+              <tr>
+                <th style="width:6%">Grade</th>
+                <th style="width:47%">A. 課題設定 (Issue Finding)</th>
+                <th style="width:47%">B. 構造化・計画 (Structuring)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr onclick="showSupplement('think', 'G8')">
+                <td><span class="grade-label">G8</span></td>
+                <td><span class="comp-subtitle">産業構造の再定義</span>業界全体の商習慣やサプライチェーンの構造的な歪みを課題として捉え、既存の産業定義を書き換える「問い」を立てる。</td>
+                <td><span class="comp-subtitle">エコシステム構想</span>一企業では完結しないビジョンを描き、競合他社・行政・異業種を巻き込んだエコシステム全体を設計する。</td>
+              </tr>
+              <tr onclick="showSupplement('think', 'G7')">
+                <td><span class="grade-label">G7</span></td>
+                <td><span class="comp-subtitle">事業創造と破壊</span>全社視点で既存事業の限界やリスクを見抜き、自らの手で事業をピボットさせる決断をする。サンクコストに囚われず撤退・統合の判断も行う。</td>
+                <td><span class="comp-subtitle">全社資源の最適配分</span>ヒト・モノ・カネ・情報を部門の壁を超えてダイナミックに再配分する戦略を描く。中長期的な競争優位性を確立するロードマップを策定。</td>
+              </tr>
+              <tr onclick="showSupplement('think', 'G6')">
+                <td><span class="grade-label">G6</span></td>
+                <td><span class="comp-subtitle">構造的課題の特定</span>本部内の構造的な矛盾（サイロ化、技術的負債等）の根本原因を特定。仕組みや構造そのものを変えることで解決すべきイシューを定義する。</td>
+                <td><span class="comp-subtitle">事業ロードマップ策定</span>単年度のPL責任を超え、3〜5年スパンでの事業や組織能力の進化プロセスを設計。複数オプションを持たせた柔軟かつ強靭な計画を立案。</td>
+              </tr>
+              <tr onclick="showSupplement('think', 'G5')">
+                <td><span class="grade-label">G5</span></td>
+                <td><span class="comp-subtitle">部門方針の策定</span>全社戦略と連動させつつ、自部門が半年〜1年で達成すべきゴールとKPIを設定。抽象的な戦略を具体的な部門目標へ落とし込む。</td>
+                <td><span class="comp-subtitle">リソース戦略</span>採用計画、予算配分、体制作りを設計。突発的なリスクや環境変化を見越してバッファや代替案を持たせた計画を組む。</td>
+              </tr>
+              <tr onclick="showSupplement('think', 'G4')">
+                <td><span class="grade-label">G4</span></td>
+                <td><span class="comp-subtitle">プロジェクト群の最適化</span>複数チーム・プロジェクトにまたがる共通課題を発見し、横断的な解決策を提案。部長の視点を補完し、現場のリアリティを踏まえた課題設定を行う。</td>
+                <td><span class="comp-subtitle">複雑な工程の交通整理</span>依存関係が複雑な複数プロジェクトのスケジュールを統合的に管理。クリティカルパスを特定し、チーム間の干渉や手戻りを防ぐ全体工程表を描く。</td>
+              </tr>
+              <tr onclick="showSupplement('think', 'G3')">
+                <td><span class="grade-label">G3</span></td>
+                <td><span class="comp-subtitle">チーム課題の発見</span>チームの目標達成を阻害する要因（スキル不足、ツール不備、士気低下等）を特定。上司から言われる前に現場レベルでの改善テーマを自ら設定する。</td>
+                <td><span class="comp-subtitle">実行プランの具体化</span>チーム目標を個人タスクに分解し、誰が・いつまでに・何をやるかを明確にする。メンバーの能力を考慮した現実的なスケジュールと役割分担を組む。</td>
+              </tr>
+              <tr onclick="showSupplement('think', 'G2')">
+                <td><span class="grade-label">G2</span></td>
+                <td><span class="comp-subtitle">自律的な解決策提示</span>困難な壁にぶつかっても自分で調べ、考え、複数の解決案（松竹梅）を持って上司に相談できる。「こうしたい」を提案する。</td>
+                <td><span class="comp-subtitle">ロジカルな段取り</span>複雑なタスクでもロジックに基づいて手順を組み立て、効率的に進める段取りができる。自分の作業の依存関係を理解し、他者を待たせない工夫をする。</td>
+              </tr>
+              <tr onclick="showSupplement('think', 'G1')">
+                <td><span class="grade-label">G1</span></td>
+                <td><span class="comp-subtitle">違和感のアラート</span>業務遂行中に発生した小さな違和感や異常を放置せず、速やかに報告・相談できる。</td>
+                <td><span class="comp-subtitle">手順の理解と遵守</span>指示された業務の背景・目的・手順を正しく理解し、マニュアルやルールに沿って忠実に計画をなぞることができる。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="comp-supplement-area" id="supp-think">
+          <div class="comp-supplement-placeholder">
+            左のテーブルの行をクリックすると<br>具体的な補足説明が表示されます
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Panel: Action -->
     <div class="comp-panel" id="panel-act">
-      <table class="comp-detail-table">
-        <thead>
-          <tr>
-            <th style="width:6%">Grade</th>
-            <th style="width:47%">C. スピード (Speed)</th>
-            <th style="width:47%">D. 品質 (Quality)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="grade-label">G8</span></td>
-            <td><span class="comp-subtitle">市場モメンタムの創出</span>自社のリリースが業界全体のトレンドやタイムラインを決定づける。「当社が動けば業界が動く」レベルで市場投入タイミングを戦略的に操る。</td>
-            <td><span class="comp-subtitle">デファクトスタンダード</span>当社のプロダクトや技術が事実上の業界標準となる品質を作り上げる。社会的に認知される最高峰のブランドを確立する。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G7</span></td>
-            <td><span class="comp-subtitle">組織OSの再設計</span>全社の意思決定プロセスそのものを再設計し、大企業病を防ぐ。即断即決するカルチャーを浸透させ、市場変化を凌駕する組織リズムを作る。</td>
-            <td><span class="comp-subtitle">変革の完遂とガバナンス</span>痛みを伴う改革や難易度の高いプロジェクトを完遂させる。ガバナンスを効かせ、スピードとコンプライアンスを両立させる。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G6</span></td>
-            <td><span class="comp-subtitle">デリバリー速度の最大化</span>本部全体の生産性を阻害するプロセスや慣習を撤廃し、リードタイムを劇的に短縮。自動化、権限委譲を推進し組織としての機動力を高める。</td>
-            <td><span class="comp-subtitle">品質基準の確立</span>「当社における品質とは何か」という高い基準を定義し、妥協を許さない文化を作る。業界トップレベルの技術的・実務的品質を保証する。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G5</span></td>
-            <td><span class="comp-subtitle">意思決定の迅速化</span>部内の決裁や承認を停滞させず、メンバーを待たせない。不完全な情報下でも経験と勘所に基づいて「Go/No-Go」の判断を遅滞なく下す。</td>
-            <td><span class="comp-subtitle">成果責任の担保</span>部門としてのアウトプット品質に最終責任を持つ。トラブル時には自ら前線に立ち、火消しと事態収拾を完遂する。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G4</span></td>
-            <td><span class="comp-subtitle">連携スピードの向上</span>チーム間のボールの受け渡しをスムーズにし、待ち時間をゼロにする。横断的な調整役として立ち回り、プロジェクト全体の進行を加速させる。</td>
-            <td><span class="comp-subtitle">クロスチェックと標準化</span>チームを跨いで品質のバラつきを是正する。ベストプラクティスを横展開し、全プロジェクトの品質底上げに貢献する。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G3</span></td>
-            <td><span class="comp-subtitle">チーム作業の効率化</span>メンバーの手戻りや迷いを減らし、チーム全体のアウトプット速度を引き上げる。会議の効率化やツール導入など、足元の生産性向上を主導する。</td>
-            <td><span class="comp-subtitle">レビュアー責任</span>メンバーの成果物に責任を持ち、リリース基準をクリアさせる。レビューを通じて品質意識を高め、ミスを未然に防ぐゲートキーパーとなる。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G2</span></td>
-            <td><span class="comp-subtitle">安定した自走</span>リーダーの細かい指示がなくとも一定のスピードで自走できる。突発的なトラブルでもパニックにならず冷静に対処し、納期を守る。</td>
-            <td><span class="comp-subtitle">高い専門性と自己完結</span>得意領域ではリーダーをも凌ぐ専門性を発揮し、高品質なアウトプットを独力で出す。「技術的なことは○○さんに聞けば安心」という信頼を得る。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G1</span></td>
-            <td><span class="comp-subtitle">迅速な着手</span>指示を受けたら「まず着手する」習慣がある。完璧主義に陥らず、プロトタイプやドラフトを早く出して方向性を確認する姿勢を持つ。</td>
-            <td><span class="comp-subtitle">基本動作の徹底</span>確認、検証、自己レビューといった基本動作を怠らない。不確かなまま進めず、必ず確認をとってから実行する慎重さを持つ。</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="comp-split">
+        <div class="comp-table-area">
+          <table class="comp-detail-table">
+            <thead>
+              <tr>
+                <th style="width:6%">Grade</th>
+                <th style="width:47%">C. スピード (Speed)</th>
+                <th style="width:47%">D. 品質 (Quality)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr onclick="showSupplement('act', 'G8')">
+                <td><span class="grade-label">G8</span></td>
+                <td><span class="comp-subtitle">市場モメンタムの創出</span>自社のリリースが業界全体のトレンドやタイムラインを決定づける。「当社が動けば業界が動く」レベルで市場投入タイミングを戦略的に操る。</td>
+                <td><span class="comp-subtitle">デファクトスタンダード</span>当社のプロダクトや技術が事実上の業界標準となる品質を作り上げる。社会的に認知される最高峰のブランドを確立する。</td>
+              </tr>
+              <tr onclick="showSupplement('act', 'G7')">
+                <td><span class="grade-label">G7</span></td>
+                <td><span class="comp-subtitle">組織OSの再設計</span>全社の意思決定プロセスそのものを再設計し、大企業病を防ぐ。即断即決するカルチャーを浸透させ、市場変化を凌駕する組織リズムを作る。</td>
+                <td><span class="comp-subtitle">変革の完遂とガバナンス</span>痛みを伴う改革や難易度の高いプロジェクトを完遂させる。ガバナンスを効かせ、スピードとコンプライアンスを両立させる。</td>
+              </tr>
+              <tr onclick="showSupplement('act', 'G6')">
+                <td><span class="grade-label">G6</span></td>
+                <td><span class="comp-subtitle">デリバリー速度の最大化</span>本部全体の生産性を阻害するプロセスや慣習を撤廃し、リードタイムを劇的に短縮。自動化、権限委譲を推進し組織としての機動力を高める。</td>
+                <td><span class="comp-subtitle">品質基準の確立</span>「当社における品質とは何か」という高い基準を定義し、妥協を許さない文化を作る。業界トップレベルの技術的・実務的品質を保証する。</td>
+              </tr>
+              <tr onclick="showSupplement('act', 'G5')">
+                <td><span class="grade-label">G5</span></td>
+                <td><span class="comp-subtitle">意思決定の迅速化</span>部内の決裁や承認を停滞させず、メンバーを待たせない。不完全な情報下でも経験と勘所に基づいて「Go/No-Go」の判断を遅滞なく下す。</td>
+                <td><span class="comp-subtitle">成果責任の担保</span>部門としてのアウトプット品質に最終責任を持つ。トラブル時には自ら前線に立ち、火消しと事態収拾を完遂する。</td>
+              </tr>
+              <tr onclick="showSupplement('act', 'G4')">
+                <td><span class="grade-label">G4</span></td>
+                <td><span class="comp-subtitle">連携スピードの向上</span>チーム間のボールの受け渡しをスムーズにし、待ち時間をゼロにする。横断的な調整役として立ち回り、プロジェクト全体の進行を加速させる。</td>
+                <td><span class="comp-subtitle">クロスチェックと標準化</span>チームを跨いで品質のバラつきを是正する。ベストプラクティスを横展開し、全プロジェクトの品質底上げに貢献する。</td>
+              </tr>
+              <tr onclick="showSupplement('act', 'G3')">
+                <td><span class="grade-label">G3</span></td>
+                <td><span class="comp-subtitle">チーム作業の効率化</span>メンバーの手戻りや迷いを減らし、チーム全体のアウトプット速度を引き上げる。会議の効率化やツール導入など、足元の生産性向上を主導する。</td>
+                <td><span class="comp-subtitle">レビュアー責任</span>メンバーの成果物に責任を持ち、リリース基準をクリアさせる。レビューを通じて品質意識を高め、ミスを未然に防ぐゲートキーパーとなる。</td>
+              </tr>
+              <tr onclick="showSupplement('act', 'G2')">
+                <td><span class="grade-label">G2</span></td>
+                <td><span class="comp-subtitle">安定した自走</span>リーダーの細かい指示がなくとも一定のスピードで自走できる。突発的なトラブルでもパニックにならず冷静に対処し、納期を守る。</td>
+                <td><span class="comp-subtitle">高い専門性と自己完結</span>得意領域ではリーダーをも凌ぐ専門性を発揮し、高品質なアウトプットを独力で出す。「技術的なことは○○さんに聞けば安心」という信頼を得る。</td>
+              </tr>
+              <tr onclick="showSupplement('act', 'G1')">
+                <td><span class="grade-label">G1</span></td>
+                <td><span class="comp-subtitle">迅速な着手</span>指示を受けたら「まず着手する」習慣がある。完璧主義に陥らず、プロトタイプやドラフトを早く出して方向性を確認する姿勢を持つ。</td>
+                <td><span class="comp-subtitle">基本動作の徹底</span>確認、検証、自己レビューといった基本動作を怠らない。不確かなまま進めず、必ず確認をとってから実行する慎重さを持つ。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="comp-supplement-area" id="supp-act">
+          <div class="comp-supplement-placeholder">
+            左のテーブルの行をクリックすると<br>具体的な補足説明が表示されます
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Panel: Relation -->
     <div class="comp-panel" id="panel-rel">
-      <table class="comp-detail-table">
-        <thead>
-          <tr>
-            <th style="width:6%">Grade</th>
-            <th style="width:47%">E. 受信・傾聴 (Listening)</th>
-            <th style="width:47%">F. 発信・伝達 (Delivery)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="grade-label">G8</span></td>
-            <td><span class="comp-subtitle">時代精神の感応</span>市場の声だけでなく、社会倫理、次世代の価値観、地政学的な変化など、より大きな文脈を深く読み解く。「公器」としての役割を直感的に捉える。</td>
-            <td><span class="comp-subtitle">ソートリーダーシップ</span>業界の第一人者として発信し、技術トレンドや思想をリードする。その発言が市場や行政を動かし、新たな規制や標準を作る力を持つ。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G7</span></td>
-            <td><span class="comp-subtitle">組織力学の洞察</span>組織内に渦巻く政治的力学、隠れた対立構造、社員の集合的無意識を読み解く。表面的な報告に惑わされず、組織の「真実」を掴む。</td>
-            <td><span class="comp-subtitle">ナラティブによる牽引</span>数字や論理だけでなく、企業の歴史や使命に基づいた「物語」を語り、組織全体を熱狂させ大きな方向性へと動かす求心力を発揮する。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G6</span></td>
-            <td><span class="comp-subtitle">メタ認知と他者視点</span>自分や自本部が全社からどう見られているかを客観的に認識できる。独善的な判断を避け、全体最適の視点から自組織の立ち位置を修正できる。</td>
-            <td><span class="comp-subtitle">概念の言語化</span>暗黙知となっている成功法則や曖昧な組織文化を、明確な言葉（スローガン、行動指針）に落とし込む。組織の共通言語として定着させる。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G5</span></td>
-            <td><span class="comp-subtitle">心理的安全性と本音</span>部下の不安や不満、キャリアへの悩みを引き出し、安心して挑戦できる環境を作る。1on1等で信頼関係を築き、離職の兆候を早期に察知する。</td>
-            <td><span class="comp-subtitle">合意形成と交渉</span>他部署との利害対立やリソースの奪い合いにおいて粘り強く交渉し、全社的にも納得感のあるWin-Winの落とし所をまとめる。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G4</span></td>
-            <td><span class="comp-subtitle">ハブとしての傾聴</span>リーダー層からの突き上げと部長層からのトップダウンの両方を聞き、翻訳して繋ぐ。現場のリアリティを経営層に正しく伝えるパイプ役となる。</td>
-            <td><span class="comp-subtitle">フォロワーシップと伝播</span>部長の方針を咀嚼し、現場のリーダーたちが理解しやすい言葉に変換して伝える。批判的なメンバーに対しても粘り強く説明する影響力を持つ。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G3</span></td>
-            <td><span class="comp-subtitle">メンバーのコンディション把握</span>日々の会話からメンバーの体調やモチベーションの変化に気づく。業務上の悩みだけでなく、人間関係や環境面での障壁を取り除くために耳を傾ける。</td>
-            <td><span class="comp-subtitle">動機付けとフィードバック</span>メンバー一人ひとりの性格や志向に合わせてやる気を引き出す声がけをする。耳の痛い改善点も、相手の成長のために率直に伝える。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G2</span></td>
-            <td><span class="comp-subtitle">背景理解</span>指示や依頼を受けた際、作業内容だけでなくその背景にある「目的」「重要度」を正しく理解する。リーダーの意図を汲み取り、先回りして動く。</td>
-            <td><span class="comp-subtitle">論理的な報告</span>事実（Fact）と解釈（Opinion）を明確に分けて報告できる。トラブル時にも感情的にならず、状況を冷静かつ正確に伝える。</td>
-          </tr>
-          <tr>
-            <td><span class="grade-label">G1</span></td>
-            <td><span class="comp-subtitle">傾聴の姿勢</span>相手の話を遮らず、最後まで目を見て聞くことができる。メモを取る、相槌を打つなど、相手に対するリスペクトを行動で示せる。</td>
-            <td><span class="comp-subtitle">明確な意思表示</span>挨拶、返事、感謝、謝罪などの基本的なコミュニケーションをハッキリと行える。「わかりました」「できません」の意思表示を曖昧にしない。</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="comp-split">
+        <div class="comp-table-area">
+          <table class="comp-detail-table">
+            <thead>
+              <tr>
+                <th style="width:6%">Grade</th>
+                <th style="width:47%">E. 受信・傾聴 (Listening)</th>
+                <th style="width:47%">F. 発信・伝達 (Delivery)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr onclick="showSupplement('rel', 'G8')">
+                <td><span class="grade-label">G8</span></td>
+                <td><span class="comp-subtitle">時代精神の感応</span>市場の声だけでなく、社会倫理、次世代の価値観、地政学的な変化など、より大きな文脈を深く読み解く。「公器」としての役割を直感的に捉える。</td>
+                <td><span class="comp-subtitle">ソートリーダーシップ</span>業界の第一人者として発信し、技術トレンドや思想をリードする。その発言が市場や行政を動かし、新たな規制や標準を作る力を持つ。</td>
+              </tr>
+              <tr onclick="showSupplement('rel', 'G7')">
+                <td><span class="grade-label">G7</span></td>
+                <td><span class="comp-subtitle">組織力学の洞察</span>組織内に渦巻く政治的力学、隠れた対立構造、社員の集合的無意識を読み解く。表面的な報告に惑わされず、組織の「真実」を掴む。</td>
+                <td><span class="comp-subtitle">ナラティブによる牽引</span>数字や論理だけでなく、企業の歴史や使命に基づいた「物語」を語り、組織全体を熱狂させ大きな方向性へと動かす求心力を発揮する。</td>
+              </tr>
+              <tr onclick="showSupplement('rel', 'G6')">
+                <td><span class="grade-label">G6</span></td>
+                <td><span class="comp-subtitle">メタ認知と他者視点</span>自分や自本部が全社からどう見られているかを客観的に認識できる。独善的な判断を避け、全体最適の視点から自組織の立ち位置を修正できる。</td>
+                <td><span class="comp-subtitle">概念の言語化</span>暗黙知となっている成功法則や曖昧な組織文化を、明確な言葉（スローガン、行動指針）に落とし込む。組織の共通言語として定着させる。</td>
+              </tr>
+              <tr onclick="showSupplement('rel', 'G5')">
+                <td><span class="grade-label">G5</span></td>
+                <td><span class="comp-subtitle">心理的安全性と本音</span>部下の不安や不満、キャリアへの悩みを引き出し、安心して挑戦できる環境を作る。1on1等で信頼関係を築き、離職の兆候を早期に察知する。</td>
+                <td><span class="comp-subtitle">合意形成と交渉</span>他部署との利害対立やリソースの奪い合いにおいて粘り強く交渉し、全社的にも納得感のあるWin-Winの落とし所をまとめる。</td>
+              </tr>
+              <tr onclick="showSupplement('rel', 'G4')">
+                <td><span class="grade-label">G4</span></td>
+                <td><span class="comp-subtitle">ハブとしての傾聴</span>リーダー層からの突き上げと部長層からのトップダウンの両方を聞き、翻訳して繋ぐ。現場のリアリティを経営層に正しく伝えるパイプ役となる。</td>
+                <td><span class="comp-subtitle">フォロワーシップと伝播</span>部長の方針を咀嚼し、現場のリーダーたちが理解しやすい言葉に変換して伝える。批判的なメンバーに対しても粘り強く説明する影響力を持つ。</td>
+              </tr>
+              <tr onclick="showSupplement('rel', 'G3')">
+                <td><span class="grade-label">G3</span></td>
+                <td><span class="comp-subtitle">メンバーのコンディション把握</span>日々の会話からメンバーの体調やモチベーションの変化に気づく。業務上の悩みだけでなく、人間関係や環境面での障壁を取り除くために耳を傾ける。</td>
+                <td><span class="comp-subtitle">動機付けとフィードバック</span>メンバー一人ひとりの性格や志向に合わせてやる気を引き出す声がけをする。耳の痛い改善点も、相手の成長のために率直に伝える。</td>
+              </tr>
+              <tr onclick="showSupplement('rel', 'G2')">
+                <td><span class="grade-label">G2</span></td>
+                <td><span class="comp-subtitle">背景理解</span>指示や依頼を受けた際、作業内容だけでなくその背景にある「目的」「重要度」を正しく理解する。リーダーの意図を汲み取り、先回りして動く。</td>
+                <td><span class="comp-subtitle">論理的な報告</span>事実（Fact）と解釈（Opinion）を明確に分けて報告できる。トラブル時にも感情的にならず、状況を冷静かつ正確に伝える。</td>
+              </tr>
+              <tr onclick="showSupplement('rel', 'G1')">
+                <td><span class="grade-label">G1</span></td>
+                <td><span class="comp-subtitle">傾聴の姿勢</span>相手の話を遮らず、最後まで目を見て聞くことができる。メモを取る、相槌を打つなど、相手に対するリスペクトを行動で示せる。</td>
+                <td><span class="comp-subtitle">明確な意思表示</span>挨拶、返事、感謝、謝罪などの基本的なコミュニケーションをハッキリと行える。「わかりました」「できません」の意思表示を曖昧にしない。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="comp-supplement-area" id="supp-rel">
+          <div class="comp-supplement-placeholder">
+            左のテーブルの行をクリックすると<br>具体的な補足説明が表示されます
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -877,14 +965,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr><td>G8</td><td>取締役級</td><td>1,800</td><td>1,900</td><td>2,000</td><td>2,100</td><td>2,200</td></tr>
-        <tr><td>G7</td><td>執行役員級</td><td>1,400</td><td>1,475</td><td>1,550</td><td>1,625</td><td>1,700</td></tr>
-        <tr><td>G6</td><td>本部長級</td><td>1,100</td><td>1,150</td><td>1,200</td><td>1,250</td><td>1,300</td></tr>
-        <tr><td>G5</td><td>部長級</td><td>850</td><td>885</td><td>920</td><td>955</td><td>990</td></tr>
-        <tr><td>G4</td><td>Mgrサポート</td><td>700</td><td>730</td><td>760</td><td>790</td><td>820</td></tr>
-        <tr><td>G3</td><td>リーダー</td><td>550</td><td>580</td><td>610</td><td>640</td><td>670</td></tr>
-        <tr><td>G2</td><td>Ldrサポート</td><td>360</td><td>385</td><td>410</td><td>435</td><td>460</td></tr>
-        <tr><td>G1</td><td>メンバー</td><td>300</td><td>310</td><td>320</td><td>330</td><td>340</td></tr>
+        <tr><td>G8</td><td>取締役級</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>G7</td><td>執行役員級</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>G6</td><td>本部長級</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>G5</td><td>部長級</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>G4</td><td>Mgrサポート</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>G3</td><td>リーダー</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>G2</td><td>Ldrサポート</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>G1</td><td>メンバー</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
       </tbody>
     </table>
 
@@ -893,18 +981,18 @@
     <div class="allowance-grid">
       <div class="card allowance-card">
         <div class="role-name">本部長</div>
-        <div class="role-amount">+10<span class="role-unit">万円/月</span></div>
-        <div class="role-annual">年額 +120万円</div>
+        <div class="role-amount">+__<span class="role-unit">万円/月</span></div>
+        <div class="role-annual">年額 +__万円</div>
       </div>
       <div class="card allowance-card">
         <div class="role-name">部長</div>
-        <div class="role-amount">+7<span class="role-unit">万円/月</span></div>
-        <div class="role-annual">年額 +84万円</div>
+        <div class="role-amount">+__<span class="role-unit">万円/月</span></div>
+        <div class="role-annual">年額 +__万円</div>
       </div>
       <div class="card allowance-card">
         <div class="role-name">リーダー</div>
-        <div class="role-amount">+3<span class="role-unit">万円/月</span></div>
-        <div class="role-annual">年額 +36万円</div>
+        <div class="role-amount">+__<span class="role-unit">万円/月</span></div>
+        <div class="role-annual">年額 +__万円</div>
       </div>
     </div>
 
@@ -1135,6 +1223,174 @@
     document.querySelectorAll('.comp-panel').forEach(p => p.classList.remove('active'));
     document.querySelector('.comp-tab.' + domain).classList.add('active');
     document.getElementById('panel-' + domain).classList.add('active');
+  }
+
+  // Supplement data
+  const supplementData = {
+    think: {
+      G1: {
+        role: 'メンバー',
+        comp1: { label: 'A. 課題設定', title: '違和感のアラート', def: '業務遂行中に発生した小さな違和感や異常を放置せず、速やかに報告・相談できる。', text: '自分で課題を解決する段階ではない。まず「おかしいな」と思ったことを見逃さず、すぐ上長に共有できることが求められる。例えば、クライアントとのやり取りで普段と異なる反応があった、数値に普段見ない変動がある、といった小さなシグナルを「気のせいかも」と流さず、報告・相談する姿勢。報告する際に「何がおかしいか」を自分の言葉で伝えられればなおよい。' },
+        comp2: { label: 'B. 構造化・計画', title: '手順の理解と遵守', def: '指示された業務の背景・目的・手順を正しく理解し、マニュアルやルールに沿って忠実に計画をなぞることができる。', text: 'G1に求められるのは「言われたことを言われた通りにやる」ことの徹底。履行率100%の状態を目指す。マニュアルがあればマニュアル通りに、手順が示されていれば手順通りに。自分の判断でアレンジや省略をしない。業務の背景や目的を理解しようとする姿勢を持ちつつ、まずは忠実な実行を積み重ねることで、次のグレードで必要な「自分で考える力」の土台を作る。' }
+      },
+      G2: {
+        role: 'リーダーサポート',
+        comp1: { label: 'A. 課題設定', title: '自律的な解決策提示', def: '困難な壁にぶつかっても、自分で調べ、考え、複数の解決案（松竹梅）を持って上司に相談できる。「こうしたい」を提案する。', text: 'G1との決定的な違いは「どうすればいいですか？」ではなく「こうしたいのですが」と言えること。自分の担当業務で壁にぶつかったとき、まず自分で調べ、考え、選択肢を用意してから相談に来る。また、自分の業務だけでなく、横並びのメンバーに対しても「こうした方がいいよ」とアドバイスできる。直接メンバーを持っているわけではないが、チーム内で頼られる存在として、他のメンバーの問題解決を一緒に手伝えるレベル。' },
+        comp2: { label: 'B. 構造化・計画', title: 'ロジカルな段取り', def: '複雑なタスクでもロジックに基づいて手順を組み立て、効率的に進める段取りができる。', text: '自分の作業の前後関係や依存関係を理解し、他の人を待たせない工夫ができる。例えば、自分のタスクの完了が他のメンバーの着手条件になっている場合に、その部分を優先して片付ける。また、複数のタスクを並行して進めるとき、何をどの順番でやれば最も効率的かを自分で判断して動ける。指示待ちではなく、自分で段取りを組んで自走できる状態。' }
+      },
+      G3: {
+        role: 'リーダー',
+        comp1: { label: 'A. 課題設定', title: 'チーム課題の発見', def: 'チームの目標達成を阻害している要因を特定し、上司から言われる前に現場レベルでの改善テーマを自ら設定する。', text: 'G2までは「個人の業務」のスコープだったが、G3からは「チーム全体」を見る。自分のチーム内で何がボトルネックになっているかを自ら発見し、改善に動ける。例えば、チームの業務進行が遅い原因がスキル不足なのか、ツールの問題なのか、士気の低下なのかを見極め、上司に言われる前に「ここを改善すべき」と提案・実行する。自走してチーム全体の自走感を作れている状態。' },
+        comp2: { label: 'B. 構造化・計画', title: '実行プランの具体化', def: 'チーム目標を個人タスクに分解し、誰が・いつまでに・何をやるかを明確にする。', text: 'チーム内の「タスク単体」の効率化が中心。例えば、あるプロジェクトを進めるとき、いきなり全部を作り込むのではなく、まず方向性の合意を取ってから詳細に進む、という手戻りを防ぐ段取りができる。評価制度で言えば「グレードの枠組みを先に合意してから、8段階分の詳細を作る」というように、確認ポイントを挟んで手戻りを最小化するプランを組める。' }
+      },
+      G4: {
+        role: 'マネージャーサポート',
+        comp1: { label: 'A. 課題設定', title: 'プロジェクト群の最適化', def: '複数チーム・プロジェクトにまたがる共通課題を発見し、横断的な解決策を提案する。', text: 'G3が「自チーム内の課題」を扱うのに対し、G4は「複数チーム・複数部署をまたぐ課題」を扱う。例えば、統括面談後の入職率を上げたいとき、面談スキルだけの問題ではなく「そもそもHR側の応募者の質に問題があるのでは」と気づき、HRチームと連携して応募段階から一緒に改善していくような動き。自分に与えられたプロジェクト単体ではなく、関連する複数のプロジェクト・変数を見渡して横断的に解決策を起案できる。部長の視点を補完し、現場のリアリティを踏まえた課題設定を行う。' },
+        comp2: { label: 'B. 構造化・計画', title: '複雑な工程の交通整理', def: '依存関係が複雑な複数プロジェクトのスケジュールを統合的に管理する。', text: 'G3が「自チームのABCというタスクを効率的に並べる」のに対し、G4は「自チームのABCと、隣の部署のXYZが並行して走るとき、全体としてどう最速にするか」を管理する。例えば、入職率改善プロジェクトでは、面談の質向上・応募者スクリーニングの改善・リーダー育成という複数プロジェクトが同時に走る。これらの依存関係を整理し、全体のクリティカルパスを特定して、チーム間の干渉や手戻りを防ぐ全体工程表を描ける。' }
+      },
+      G5: {
+        role: '部長級',
+        comp1: { label: 'A. 課題設定', title: '部門方針の策定', def: '全社戦略と連動させつつ、自部門が半年〜1年で達成すべきゴールとKPIを設定する。', text: 'G4までは「与えられたプロジェクトに対してどう遂行するか」が中心だったが、G5からは「自分でゴールやKPIを策定する」段階に入る。例えば、軽貨物事業において「営業部門の売上目標」「入職率目標」など、利益を構成する各KPIに対して責任を持つ。事業部全体のPL責任は本部長（G6）が負うが、G5はそのPLを分解した各指標に対して自部門のゴールを定め、メンバーが迷わず走れるよう具体的な部門目標へ落とし込む。' },
+        comp2: { label: 'B. 構造化・計画', title: 'リソース戦略', def: '採用計画、予算配分、体制作りを設計する。', text: 'G4までは「与えられたメンバーや座組」の中で戦うが、G5は「リソースそのものを自分で考える」。例えば、「入職率を上げるために、現在の組織体制を見直して部署を統合すべき」「このKPI達成には追加人員が必要」といったリソース配分の判断と提案ができる。ただし、事業全体の構造を変えるレベルの判断（G6以上）ではなく、自部門の範囲内でのリソース最適化が中心。' }
+      },
+      G6: {
+        role: '本部長級',
+        comp1: { label: 'A. 課題設定', title: '構造的課題の特定', def: '本部内の構造的な矛盾の根本原因を特定し、仕組みや構造そのものを変えることで解決すべきイシューを定義する。', text: 'G5がKPI責任（売上や入職率など利益の分解指標）を負うのに対し、G6はPL責任（事業全体の利益）を負う。そのため、個別のKPIではなく「そもそもこの事業構造・組織構造に問題がないか」というレベルで課題を捉える。例えば、各部署の業務効率が低い原因が個別のスキル不足ではなく「数値入力プロセスそのものに本部全体の時間が取られている」という構造的なボトルネックを特定し、抜本的な改善を仕掛ける。個別最適ではなく、事業部全体の構造を変えるイシューを定義する。' },
+        comp2: { label: 'B. 構造化・計画', title: '事業ロードマップ策定', def: '3〜5年スパンでの事業や組織能力の進化プロセスを設計する。', text: 'G5が半年〜1年のKPI達成に責任を持つのに対し、G6は3〜5年の時間軸で事業の進化プロセスを描く。事業内の複数部署（営業、HR、現場管理など）がそれぞれ成功しないと事業全体が成功しないため、部署間の目標が二律背反にならないよう全体を設計する。例えば、軽貨物事業部長として「営業が売上を伸ばしても、HR・現場管理が追いつかなければ事業は破綻する」という全体最適の視点で計画を組む。' }
+      },
+      G7: {
+        role: '執行役員級',
+        comp1: { label: 'A. 課題設定', title: '事業創造と破壊', def: '全社視点で既存事業の限界やリスクを見抜き、自らの手で事業をピボットさせる決断をする。', text: 'G6が「与えられた事業ドメインの中でPL責任を持つ」のに対し、G7は「事業ドメインそのものを変える・作る・壊す」判断をする。例えば、軽貨物事業だけではなく「ガソリンカード事業を新たに追加すべき」「この事業領域から撤退すべき」といった、事業ポートフォリオ自体を変える意思決定ができる。G5やG6からの提案は歓迎されるが、最終的にその意思決定の責任を負い、実行に移す権限と覚悟を持つのがG7。' },
+        comp2: { label: 'B. 構造化・計画', title: '全社資源の最適配分', def: 'ヒト・モノ・カネ・情報の経営資源を部門の壁を超えてダイナミックに再配分する戦略を描く。', text: '全社の経営資源を、既存の部門構造に縛られずに最適配分する。短期的には各事業部が痛みを伴う可能性があっても、中長期的な競争優位性を確立するための資源移動を判断する。例えば、成長事業に重点投資するために成熟事業のリソースを再配分する、新規事業立ち上げのために既存組織を横断した特別チームを編成する、といった全社レベルの資源配分の意思決定と実行。' }
+      },
+      G8: {
+        role: '取締役級',
+        comp1: { label: 'A. 課題設定', title: '産業構造の再定義', def: '業界全体の商習慣やサプライチェーンの構造的な歪みを課題として捉え、既存の産業定義を書き換える「問い」を立てる。', text: '自社の事業を超え、業界全体の構造を変えにいく。例えば、「再配達の問題を解消する」のではなく「そもそも今日届く必要があるのか？」という問いを立てて業界の商習慣そのものを書き換えるような発想。物流業界における2024年問題への対応として「この法改正までに、業界としてこういう仕組みを作らなければならない」と業界全体を巻き込んだ課題設定ができる。ラストワンマイル革命を体現し、業界のゲームルール自体を変えるレベルの「問い」を立てられる人材。' },
+        comp2: { label: 'B. 構造化・計画', title: 'エコシステム構想', def: '一企業では完結しないビジョンを描き、競合他社・行政・異業種をも巻き込んだエコシステム全体を設計する。', text: '自社単独では実現できないスケールの構想を描き、業界団体の設立、行政への働きかけ、異業種とのアライアンス構築などを通じて実現に向けて動く。例えば、物流業界の標準プラットフォームの構築、業界協会の立ち上げと運営など、自社の利益を超えた業界全体の進化を設計し、それが結果的に自社の競争優位にもつながるエコシステムを構想・実行できる。' }
+      }
+    },
+    act: {
+      G1: {
+        role: 'メンバー',
+        comp1: { label: 'C. スピード', title: '迅速な着手', def: '指示を受けたら「まず着手する」習慣がある。完璧主義に陥らず、プロトタイプやドラフトを早く出して方向性を確認する姿勢を持つ。', text: '指示を受けた内容に対してすぐ着手する。「完璧に仕上げてから見せよう」ではなく「まず取りかかって途中でも方向性を確認する」姿勢が大事。例えば、資料作成を依頼されたら、いきなり完成形を目指すのではなく、まずドラフトを作って上長に確認を取る。「考えている時間」が長くなりがちな人は、まず手を動かすことを意識する。' },
+        comp2: { label: 'D. 品質', title: '基本動作の徹底', def: '確認、検証、自己レビューといった基本動作を怠らない。不確かなまま進めず、必ず確認をとってから実行する慎重さを持つ。', text: 'スピードと両立して求められるのが品質の基本動作。誤字脱字のチェック、数値の確認、送信前の見直しなど「当たり前のことを当たり前にやる」こと。不確かなまま進めず、わからないことは確認してから実行する。G1においてはとにかくこの「確認・検証・自己レビュー」の習慣を徹底的に身につけることが求められる。' }
+      },
+      G2: {
+        role: 'リーダーサポート',
+        comp1: { label: 'C. スピード', title: '安定した自走', def: 'リーダーの細かい指示がなくとも一定のスピードで自走できる。突発的なトラブルでもパニックにならず冷静に対処し、納期を守る。', text: 'G1が「指示されたらすぐ動く」なのに対し、G2は「指示がなくてもどんどん実行できる」レベル。日常業務においてリーダーからの細かい指示を待たず、自分で判断して前に進められる。また、突発的なトラブルや想定外の負荷がかかった場合でも、冷静に対処して納期を守れる。パニックにならず「今何をすべきか」を自分で判断して動ける安定感が求められる。' },
+        comp2: { label: 'D. 品質', title: '高い専門性と自己完結', def: '得意領域ではリーダーをも凌ぐ専門性を発揮し、高品質なアウトプットを独力で出す。', text: '全方位ではなくていいので、特定の得意領域においてはリーダーよりも詳しい・品質が高い状態を求める。例えば、営業チーム全体のパイプライン管理はリーダーが得意でも、営業リストの作成については「どの情報源からどんな情報を集めてどうリストにすべきか」を最も詳しく知っているのはこの人、という信頼を得ている状態。「技術的なことは○○さんに聞けば安心」と言われる領域を持つことが重要。' }
+      },
+      G3: {
+        role: 'リーダー',
+        comp1: { label: 'C. スピード', title: 'チーム作業の効率化', def: 'メンバーの手戻りや迷いを減らし、チーム全体のアウトプット速度を引き上げる。', text: '個人の速さではなく「チーム全体のスループット」を最大化することが求められる。具体的には、メンバーの手戻りを防ぐことが最重要。例えば、大きなプロジェクトに取り組むとき、いきなり全部作り込ませるのではなく「まず方向性で合意→詳細に着手」というステップを踏ませることで、全部作り直しのリスクを防ぐ。会議の効率化、ツール導入、業務フローの改善など、足元の生産性向上を主導する。スコープは「自チーム内のタスク単体」の効率化。' },
+        comp2: { label: 'D. 品質', title: 'レビュアー責任', def: 'メンバーの成果物に責任を持ち、リリース基準をクリアさせる。', text: 'チームから出るアウトプットの品質に対して最終責任を持つ。メンバーが作成した資料、提出物、提案書などを自分がレビューし、基準に達しているかを判断する。レビューを通じてメンバーの品質意識を育て、「なぜこの品質が必要なのか」を理解させることで、チーム全体の品質レベルを底上げする。' }
+      },
+      G4: {
+        role: 'マネージャーサポート',
+        comp1: { label: 'C. スピード', title: '連携スピードの向上', def: 'チーム間のボールの受け渡しをスムーズにし、待ち時間をゼロにする。', text: 'G3が「自チーム内のABCというタスクを速く回す」のに対し、G4は「自チームのABCと、隣のチーム・部署のXYZが並行して走るとき、全体として最速にする」ことを担う。例えば、入職率を上げるプロジェクトで、営業チームの面談改善とHRチームの応募者スクリーニング改善が同時に走る場合、両方の進捗を把握し、一方の遅れが他方に影響しないよう先回りして調整する。横断的な調整役としてプロジェクト全体の進行を加速させる。' },
+        comp2: { label: 'D. 品質', title: 'クロスチェックと標準化', def: 'チームを跨いで品質のバラつきを是正し、ベストプラクティスを横展開する。', text: '自チームだけでなく、関わる複数チーム・プロジェクトの品質水準を揃える。あるチームで成功したやり方があれば他チームにも横展開し、特定のチームだけ品質が低いという状況を作らない。全体の品質底上げに貢献することで、部長（G5）が見ている部門全体のアウトプット品質を支える。' }
+      },
+      G5: {
+        role: '部長級',
+        comp1: { label: 'C. スピード', title: '意思決定の迅速化', def: '部内の決裁や承認を停滞させず、メンバーを待たせない。不完全な情報下でもGo/No-Goの判断を遅滞なく下す。', text: 'G4までは「行動の速さ」が中心だったが、G5からは「意思決定の速さ」が中心になる。メンバーやリーダーが判断を仰いできたとき、必要以上に情報収集や検討に時間をかけず、経験と勘所に基づいてGoかNo-Goかを速やかに判断する。意思決定が遅れることで部門全体の動きが停滞する状態を作らない。完璧な情報が揃うのを待たず、7割の情報で意思決定し、走りながら修正する姿勢が求められる。' },
+        comp2: { label: 'D. 品質', title: '成果責任の担保', def: '部門としてのアウトプット品質に最終責任を持つ。トラブル時には自ら前線に立つ。', text: '部門から出るすべてのアウトプットに対して最終品質責任を負う。トラブルが発生した場合は、リーダーやメンバーに任せきりにせず、自ら前線に立って火消しと事態収拾を行い、クライアントや関連部署からの信頼を守り抜く。結果責任を「自分のもの」として引き受ける覚悟が求められる。' }
+      },
+      G6: {
+        role: '本部長級',
+        comp1: { label: 'C. スピード', title: 'デリバリー速度の最大化', def: '本部全体の生産性を阻害するプロセスや慣習を撤廃し、リードタイムを劇的に短縮する。', text: 'G5が「自部門内の意思決定を速くする」のに対し、G6は「本部全体のボトルネックを発見し、抜本的に解消する」。例えば、各部署の業務そのものは効率的に回っていても、「実は全部署共通で数値入力に膨大な時間がかかっている」という本部全体の構造的なボトルネックを発見し、入力プロセスそのものを自動化・再設計するといった動き。個別タスクの改善ではなく、仕組みレベルでの改善を推進して本部全体の機動力を高める。' },
+        comp2: { label: 'D. 品質', title: '品質基準の確立', def: '「当社における品質とは何か」という高い基準を定義し、妥協を許さない文化を作る。', text: '個別のアウトプットの品質ではなく「品質の基準そのもの」を定義し、組織に浸透させる責任。本部管掌範囲の専門性を統括し、業界トップレベルの品質水準を維持する。各部門の品質がバラバラにならないよう、「うちの事業部はこのレベルを当たり前にする」という基準を明確に定め、その文化を組織に根付かせる。' }
+      },
+      G7: {
+        role: '執行役員級',
+        comp1: { label: 'C. スピード', title: '組織OSの再設計', def: '全社の意思決定プロセスそのものを再設計し、大企業病を防ぐ。', text: 'G6が「本部のボトルネック解消」なのに対し、G7は「全社の意思決定プロセスそのものを再設計する」レベル。年に1回あるかないかの大きな構造変革を推進する。例えば、承認フローの抜本的な見直し、組織構造のフラット化、意思決定権限の大幅な委譲など、全社の動き方のルール自体を変える。即断即決のカルチャーを浸透させ、市場変化のスピードを凌駕する組織リズムを作る。' },
+        comp2: { label: 'D. 品質', title: '変革の完遂とガバナンス', def: '痛みを伴う改革を完遂させつつ、ガバナンスを効かせてスピードとコンプライアンスを両立させる。', text: '全社的な変革プロジェクトを「完遂」させる力が求められる。途中で頓挫させず、組織の抵抗があっても最後までやり切る。同時に、スピードを追求するあまりガバナンスが崩壊しないよう、コンプライアンスとの両立を図る。外部ステークホルダー（株主、規制当局等）に対する企業の社会的信用を守りながら、大胆な変革を推進する。' }
+      },
+      G8: {
+        role: '取締役級',
+        comp1: { label: 'C. スピード', title: '市場モメンタムの創出', def: '自社のリリースが業界全体のトレンドやタイムラインを決定づける。', text: '自社の動きが業界のスケジュールや方向性を決めるレベル。例えば、物流業界における2024年問題に対して「この期限までに業界としてこの問題を解決しなければならない。自社がこのサービスを提供することで解決の道筋をつける」という市場投入タイミングの戦略的な判断ができる。法改正のスケジュール、業界団体の動き、競合の状況を読みながら、「当社が動けば業界が動く」という影響力を持ってタイミングを操る。' },
+        comp2: { label: 'D. 品質', title: 'デファクトスタンダード', def: '当社のプロダクトや技術が事実上の業界標準となる品質を作り上げる。', text: '自社のサービス・手法・品質基準が業界のスタンダードとして認知される状態を作る。「軽貨物配送といえばこの会社」「ラストワンマイルの品質基準はここが作った」と社会的に認知される最高峰のブランドを確立する。品質が単に「高い」のではなく、業界全体の基準を定義するレベルに到達している状態。' }
+      }
+    },
+    rel: {
+      G1: {
+        role: 'メンバー',
+        comp1: { label: 'E. 受信・傾聴', title: '傾聴の姿勢', def: '相手の話を遮らず、最後まで目を見て聞くことができる。メモを取る、相槌を打つなど、相手に対するリスペクトを行動で示せる。', text: 'まず「ちゃんと相手の話を聞くことができる」こと、そして「理解しようとする努力が見えている」ことが求められる。話を聞いているフリではなく、実際に内容を理解しようとしている姿勢が態度に表れている状態。例えば、上長からの指示を聞くとき、わからないことをわからないまま流さず、その場で質問して確認する。' },
+        comp2: { label: 'F. 発信・伝達', title: '明確な意思表示', def: '挨拶、返事、感謝、謝罪などの基本的なコミュニケーションをハッキリと行える。', text: '社会人としての基本的なコミュニケーションが確実にできること。挨拶をする、返事をする、感謝を伝える、間違えたら謝る。「わかりました」「できません」の意思表示を曖昧にしない。「多分大丈夫です」のような曖昧な返事ではなく、明確にYes/Noを伝えられる。これは全グレードの土台であり、ここが欠けていると上のグレードの要件を満たすことは不可能。' }
+      },
+      G2: {
+        role: 'リーダーサポート',
+        comp1: { label: 'E. 受信・傾聴', title: '背景理解', def: '指示や依頼を受けた際、作業内容だけでなく背景にある「目的」「重要度」を正しく理解する。', text: 'G1が「言われた通りにやる」のに対し、G2は「なぜそれをやるのか」まで理解する。例えば、上長から「このシートに数値を入力して」と言われたとき、G1は「はい、入力します」でOK。G2は「この入力は、自分たちが改善策を最速で打つために必要なデータで、上長からフィードバックをもらうための材料なんだ」と目的を理解した上で取り組む。目的を理解しているからこそ、何を優先すべきか、どの精度で仕上げるべきかを自分で判断できるようになる。' },
+        comp2: { label: 'F. 発信・伝達', title: '論理的な報告', def: '事実（Fact）と解釈（Opinion）を明確に分けて報告できる。', text: 'G1の「明確な意思表示」から一歩進み、報告の質が求められる。特に重要なのは「事実」と「自分の解釈」を明確に分けて伝えること。例えば、「今月の数値が下がっています（Fact）。原因は先月のリスト品質が落ちたためだと考えます（Opinion）」のように構造化して報告する。トラブル時にも感情的にならず、何が起きたか（事実）→なぜ起きたか（推定原因）→どうすべきか（提案）の順で冷静に伝えられる。' }
+      },
+      G3: {
+        role: 'リーダー',
+        comp1: { label: 'E. 受信・傾聴', title: 'メンバーのコンディション把握', def: '日々の会話からメンバーの体調やモチベーションの変化に気づく。', text: 'G2までは「自分が情報を受け取る」側だったが、G3からは「チームメンバーから情報を引き出す」側になる。自分から能動的にメンバーの状態を把握しに行く。例えば、普段よく発言するメンバーが最近静かだと気づいたとき、「何かあったのか」を察して声をかける。業務上の悩みだけでなく、モチベーションや人間関係の問題を早期にキャッチし、環境面の障壁を取り除く。また、自分からヒアリング内容を定義できる。「最近連絡が減っているのは信頼されているからか、それとも相手が忙しくて自分からヒアリングすべき状況か」を判断し、能動的に動ける。' },
+        comp2: { label: 'F. 発信・伝達', title: '動機付けとフィードバック', def: 'メンバー一人ひとりの性格や志向に合わせてやる気を引き出す声がけをする。', text: 'G2の「論理的な報告」が「正確に伝える」だったのに対し、G3は「相手の状況を考慮して伝え方を変える」レベル。論理だけでなく、相手がどういう状況か（忙しい？不安？自信がない？）を認識しながら、理論と相手の状況を組み合わせて話せる。ポジティブな評価だけでなく、耳の痛い改善点も率直に伝えるが、それが「相手の成長のため」という文脈で届くように工夫する。' }
+      },
+      G4: {
+        role: 'マネージャーサポート',
+        comp1: { label: 'E. 受信・傾聴', title: 'ハブとしての傾聴', def: 'リーダー層と部長層の両方の意見を聞き、翻訳して繋ぐ。', text: 'G3が「自チームのメンバーの声を聞く」のに対し、G4は「上（部長層）と下（リーダー層）の両方から聞いて翻訳する」ことが求められる。例えば、上長から方針が降りてきたとき、現場のリーダーたちに「なぜこれをやるのか」を彼らの言葉で説明する。逆に、現場から「これは現実的に難しい」という声が上がったとき、その背景を正確に整理して上長に伝える。複数の関係者から聞いた内容を自分の中で整理し、翻訳（ボイスチェンジ）できる力が重要。' },
+        comp2: { label: 'F. 発信・伝達', title: 'フォロワーシップと伝播', def: '部長の方針を咀嚼し、現場のリーダーたちが理解しやすい言葉に変換して伝える。', text: 'G3が「論理 + 相手の状況」で伝えるのに対し、G4は「論理 + 相手 + 全体戦略」を踏まえて伝える。上（部長層）からの方針と下（現場）の実情の両方を理解した上で、現場に伝わる言葉に変換する。批判的なメンバーに対しても感情的にならず、粘り強く説明する。「なぜこの方針なのか」を自分の言葉で、相手の立場に立って説明できる影響力が求められる。' }
+      },
+      G5: {
+        role: '部長級',
+        comp1: { label: 'E. 受信・傾聴', title: '心理的安全性と本音', def: '部下の不安や不満、キャリアへの悩みを引き出し、安心して挑戦できる環境を作る。', text: 'G4が「上下の翻訳」だったのに対し、G5は「上下+横」まで見えている。他部署との利害関係も含めて全体の情報を把握し、自部門の組織全体のコンディションを管理する。1on1等を通じて部下が本音で話せる環境を作り、離職の兆候や組織の歪みを早期に察知する。情報収集ができることによって、組織全体のガス抜きがしっかりでき、組織が健全に動く状態を維持する。' },
+        comp2: { label: 'F. 発信・伝達', title: '合意形成と交渉', def: '他部署との利害対立やリソースの奪い合いにおいて、全社的にも納得感のあるWin-Winの落とし所をまとめる。', text: 'G4が「上下」の翻訳だったのに対し、G5は「上下+横（他部署）」との交渉・合意形成が加わる。利害関係が対立する場面でも、自部門だけでなく全社的な視点で納得感のある結論を導く。粘り強い交渉力と、相手の立場を理解した上での提案力が求められる。' }
+      },
+      G6: {
+        role: '本部長級',
+        comp1: { label: 'E. 受信・傾聴', title: 'メタ認知と他者視点', def: '自分や自本部が全社からどう見られているかを客観的に認識できる。', text: '自分の事業部が他の事業部や経営陣からどう評価されているか、自分のリーダーシップがどう受け止められているかを客観的に把握する能力。例えば、自部門の成果が出ているときでも「他本部から見たら自分たちのやり方は独善的に映っていないか」と振り返れる。さまざまな関係者からバイアスのかかった情報が上がってくる中で、その裏にある本当の意図や状況を読み解く力が必要。' },
+        comp2: { label: 'F. 発信・伝達', title: '概念の言語化', def: '暗黙知となっている成功法則や曖昧な組織文化を、明確な言葉に落とし込む。', text: '組織が「なんとなくそうしている」ことを、明確な言葉（スローガン、行動指針、フレームワーク）に変換して共有する力。例えば、「AIとは何か」「自社のDXとはどういうことか」を自分の事業本部のメンバー全員にわかるように言語化し、説明できる。暗黙のうちに共有されていた成功パターンを形式知にすることで、組織の知見を属人化させず、再現可能にする。繰り返し発信し、組織の共通言語として定着させる。' }
+      },
+      G7: {
+        role: '執行役員級',
+        comp1: { label: 'E. 受信・傾聴', title: '組織力学の洞察', def: '組織内に渦巻く政治的力学、隠れた対立構造、社員の集合的無意識を読み解く。', text: 'G6が「自本部がどう見られているか」を認識するのに対し、G7は「全社の力学そのもの」を読み解く。さまざまな事業部長や部門長からそれぞれの思惑を含んだ情報が上がってくる中で、表面的な報告に惑わされず「組織の中で本当に何が起きているか」を把握する。誰と誰の間に暗黙の対立があるか、組織全体のムードがどう変化しているかを感じ取り、先手を打つ。' },
+        comp2: { label: 'F. 発信・伝達', title: 'ナラティブによる牽引', def: '企業の歴史や使命に基づいた「物語」を語り、組織全体を熱狂させる求心力を発揮する。', text: 'G6の「概念の言語化」が「共通言語を作る」だったのに対し、G7は「全社を一つの方向に動かすストーリーを語る」レベル。例えば、「ラストワンマイル革命」というビジョンについて、数字や論理だけでなく「なぜ我々がこれをやるのか」「これが実現したら世の中がどう変わるのか」を物語として語り、組織全体を熱狂させ「自分もやりたい」と思わせる求心力を発揮する。' }
+      },
+      G8: {
+        role: '取締役級',
+        comp1: { label: 'E. 受信・傾聴', title: '時代精神の感応', def: '社会倫理、次世代の価値観、地政学的な変化など、より大きな文脈を深く読み解く。', text: 'G7までが「社内」の力学を読む能力だったのに対し、G8は「社外・業界・社会全体」の大きな流れを読む。物流業界の動向だけでなく、テクノロジーの進化、規制環境の変化、社会的価値観のシフトなど、企業活動に影響を与えるマクロな文脈を深く読み解く。「軽貨物のことなら社長に聞きに来る」という状態が、G8の傾聴力が社外にも認知されている証拠。業界全体の大局観を捉えている。' },
+        comp2: { label: 'F. 発信・伝達', title: 'ソートリーダーシップ', def: '業界の第一人者として発信し、技術トレンドや思想をリードする。その発言が市場や行政を動かす力を持つ。', text: 'G7が「社内を熱狂させる」のに対し、G8は「業界全体をリードする」発信力。業界カンファレンスでの基調講演、メディアでの発言、業界団体での提言などを通じて、業界全体の方向性に影響を与える。「この領域の第一人者」として社外から認知され、その発言が他社の戦略や行政の規制にまで影響を及ぼすレベル。' }
+      }
+    }
+  };
+
+  function showSupplement(domain, grade) {
+    const data = supplementData[domain][grade];
+    if (!data) return;
+
+    // Clear all selections in current panel
+    const panel = document.getElementById('panel-' + domain);
+    panel.querySelectorAll('tbody tr').forEach(tr => tr.classList.remove('selected'));
+
+    // Find and select the clicked row
+    const rows = panel.querySelectorAll('tbody tr');
+    rows.forEach(tr => {
+      if (tr.querySelector('.grade-label')?.textContent === grade) {
+        tr.classList.add('selected');
+      }
+    });
+
+    // Build supplement content
+    const suppArea = document.getElementById('supp-' + domain);
+    const labelClass = domain;
+    suppArea.innerHTML = `
+      <div class="comp-supplement-content active">
+        <div class="supp-grade">${grade} — ${data.role}</div>
+        <div class="supp-section">
+          <div class="supp-label ${labelClass}">${data.comp1.label}</div>
+          <div class="supp-title">${data.comp1.title}</div>
+          <div class="supp-def">${data.comp1.def}</div>
+          <div class="supp-text">${data.comp1.text}</div>
+        </div>
+        <div class="supp-section">
+          <div class="supp-label ${labelClass}">${data.comp2.label}</div>
+          <div class="supp-title">${data.comp2.title}</div>
+          <div class="supp-def">${data.comp2.def}</div>
+          <div class="supp-text">${data.comp2.text}</div>
+        </div>
+      </div>
+    `;
   }
 
   // Smooth active nav highlight
