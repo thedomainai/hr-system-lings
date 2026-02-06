@@ -463,6 +463,146 @@
     .cycle-step h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.3rem; }
     .cycle-step p { font-size: 0.72rem; color: var(--ink-soft); }
 
+    /* ── OVERVIEW SECTION ── */
+    .overview-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .overview-card {
+      padding: 2rem; position: relative; overflow: hidden;
+      border-left: 4px solid var(--border);
+    }
+    .overview-card.ov-grade { border-left-color: var(--accent-think); }
+    .overview-card.ov-eval { border-left-color: var(--accent-act); }
+    .overview-card.ov-comp { border-left-color: var(--accent-rel); }
+    .overview-card .ov-num {
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600;
+      color: var(--ink-muted); letter-spacing: 0.12em; margin-bottom: 0.6rem;
+    }
+    .overview-card.ov-grade .ov-num { color: var(--accent-think); }
+    .overview-card.ov-eval .ov-num { color: var(--accent-act); }
+    .overview-card.ov-comp .ov-num { color: var(--accent-rel); }
+    .overview-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .overview-card .ov-subtitle {
+      font-size: 0.7rem; color: var(--ink-muted); text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 1rem;
+    }
+    .overview-card ul {
+      list-style: none; padding: 0; margin: 0;
+    }
+    .overview-card ul li {
+      font-size: 0.8rem; color: var(--ink-soft); padding: 0.3rem 0;
+      padding-left: 1rem; position: relative;
+    }
+    .overview-card ul li::before {
+      content: ''; position: absolute; left: 0; top: 0.65rem;
+      width: 4px; height: 4px; border-radius: 50%; background: var(--border);
+    }
+    .overview-card.ov-grade ul li::before { background: var(--accent-think); }
+    .overview-card.ov-eval ul li::before { background: var(--accent-act); }
+    .overview-card.ov-comp ul li::before { background: var(--accent-rel); }
+    .overview-relation {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; margin: 2rem 0; padding: 1.5rem;
+      background: var(--card); border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+    }
+    .overview-relation .rel-box {
+      padding: 0.8rem 1.5rem; border-radius: var(--radius);
+      font-size: 0.85rem; font-weight: 600;
+    }
+    .overview-relation .rel-box.grade { background: var(--accent-think-bg); color: var(--accent-think); }
+    .overview-relation .rel-box.eval { background: var(--accent-act-bg); color: var(--accent-act); }
+    .overview-relation .rel-box.comp { background: var(--accent-rel-bg); color: var(--accent-rel); }
+    .overview-relation .rel-arrow {
+      font-size: 1.2rem; color: var(--ink-muted);
+    }
+
+    /* ── ANNUAL CYCLE TIMELINE ── */
+    .annual-cycle {
+      background: var(--card); border: 1px solid var(--border-light);
+      border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem;
+    }
+    .annual-cycle h4 {
+      font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .annual-cycle h4 .badge {
+      font-size: 0.65rem; font-weight: 600; padding: 0.2rem 0.6rem;
+      border-radius: 3px; background: var(--accent-act-bg); color: var(--accent-act);
+    }
+    .timeline-row {
+      display: flex; align-items: stretch; margin-bottom: 1.5rem;
+    }
+    .timeline-row:last-child { margin-bottom: 0; }
+    .timeline-label {
+      width: 100px; flex-shrink: 0; font-size: 0.75rem; font-weight: 600;
+      color: var(--ink-muted); padding-top: 0.8rem;
+    }
+    .timeline-track {
+      flex: 1; display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem;
+    }
+    .timeline-month {
+      text-align: center; padding: 0.6rem 0.3rem;
+      border-radius: var(--radius); font-size: 0.7rem;
+      border: 1px solid var(--border-light); background: var(--bg);
+    }
+    .timeline-month.active {
+      background: var(--accent-act-bg); border-color: var(--accent-act);
+      color: var(--accent-act); font-weight: 600;
+    }
+    .timeline-month.highlight {
+      background: var(--accent-think-bg); border-color: var(--accent-think);
+      color: var(--accent-think); font-weight: 600;
+    }
+    .timeline-month.special {
+      background: var(--accent-rel-bg); border-color: var(--accent-rel);
+      color: var(--accent-rel); font-weight: 600;
+    }
+    .timeline-month .tm-label {
+      display: block; font-size: 0.6rem; color: var(--ink-muted); margin-top: 0.2rem;
+    }
+    .timeline-month.active .tm-label,
+    .timeline-month.highlight .tm-label,
+    .timeline-month.special .tm-label { color: inherit; opacity: 0.8; }
+
+    .eval-flow {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.8rem;
+      margin-top: 2rem;
+    }
+    .eval-flow-step {
+      text-align: center; padding: 1.2rem 0.8rem; position: relative;
+      background: var(--card); border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+    }
+    .eval-flow-step::after {
+      content: '\2192'; position: absolute; right: -0.6rem; top: 50%;
+      transform: translateY(-50%); color: var(--border); font-size: 1rem;
+      z-index: 1;
+    }
+    .eval-flow-step:last-child::after { display: none; }
+    .eval-flow-step .ef-icon {
+      font-size: 1.3rem; margin-bottom: 0.4rem;
+    }
+    .eval-flow-step h5 {
+      font-size: 0.75rem; font-weight: 700; margin-bottom: 0.2rem;
+    }
+    .eval-flow-step p {
+      font-size: 0.65rem; color: var(--ink-muted); line-height: 1.5;
+    }
+    .eval-flow-step.ef-monthly { border-top: 3px solid var(--accent-think); }
+    .eval-flow-step.ef-quarterly { border-top: 3px solid var(--accent-act); }
+    .eval-flow-step.ef-semi { border-top: 3px solid var(--accent-rel); }
+
+    @media (max-width: 900px) {
+      .overview-grid { grid-template-columns: 1fr; }
+      .overview-relation { flex-direction: column; }
+      .overview-relation .rel-arrow { transform: rotate(90deg); }
+      .timeline-track { grid-template-columns: repeat(3, 1fr); }
+      .eval-flow { grid-template-columns: repeat(2, 1fr); }
+      .eval-flow-step::after { display: none; }
+    }
+
     /* ── FOOTER ── */
     .footer {
       border-top: 1px solid var(--border);
@@ -506,6 +646,7 @@
       <span>H</span> Personnel OS v3.0
     </div>
     <div class="topnav-links">
+      <a href="#overview">全体像</a>
       <a href="#grading">等級制度</a>
       <a href="#competency">コンピテンシー</a>
       <a href="#evaluation">評価制度</a>
@@ -523,6 +664,69 @@
   <div class="hero-sub">
     <strong>System as a Message</strong> &mdash; 制度の設計そのものが、組織が何を大切にしているかを語る。<br>
     等級制度・評価制度・報酬制度・運用マニュアルの全体像を、ここに公開する。
+  </div>
+</section>
+
+<!-- ═══════════ 00: OVERVIEW ═══════════ -->
+<section class="section" id="overview" style="background: var(--bg-alt); margin: 0 auto; max-width: 100%; padding-left: calc((100% - 1280px)/2 + 2rem); padding-right: calc((100% - 1280px)/2 + 2rem);">
+  <div style="max-width: 1280px;">
+    <div class="section-head">
+      <span class="section-num">00</span>
+      <h2 class="section-title">人事制度の全体像</h2>
+    </div>
+    <p class="section-desc">
+      本制度は<strong>等級制度・評価制度・報酬制度</strong>の3つの柱で構成される。それぞれが独立しつつも連動し、「どう成長し、どう評価され、どう報われるか」を明確にする。
+    </p>
+
+    <!-- 3 Pillars -->
+    <div class="overview-grid">
+      <div class="card overview-card ov-grade">
+        <div class="ov-num">PILLAR 01</div>
+        <h3>等級制度</h3>
+        <div class="ov-subtitle">Grading System</div>
+        <ul>
+          <li>G1〜G8の8段階グレード</li>
+          <li>「スコープ（責任範囲）」で定義</li>
+          <li>役職とは独立した能力等級</li>
+          <li>コンピテンシー3領域×2要素で評価</li>
+        </ul>
+      </div>
+      <div class="card overview-card ov-eval">
+        <div class="ov-num">PILLAR 02</div>
+        <h3>評価制度</h3>
+        <div class="ov-subtitle">Evaluation System</div>
+        <ul>
+          <li>年2回の正式評価（半期ごと）</li>
+          <li>「卒業要件方式」による絶対評価</li>
+          <li>3段階ゲート（成果・行動・能力）</li>
+          <li>月次1on1 + 四半期中間レビュー</li>
+        </ul>
+      </div>
+      <div class="card overview-card ov-comp">
+        <div class="ov-num">PILLAR 03</div>
+        <h3>報酬制度</h3>
+        <div class="ov-subtitle">Compensation System</div>
+        <ul>
+          <li>完全等級連動型の年俸制</li>
+          <li>グレード別5段階ステップ</li>
+          <li>洗い替え方式（過去に囚われない）</li>
+          <li>役職手当は責任に対する対価</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Relation Diagram -->
+    <div class="overview-relation">
+      <div class="rel-box grade">等級制度<br><span style="font-size:0.7rem;font-weight:400;">能力の定義</span></div>
+      <div class="rel-arrow">→</div>
+      <div class="rel-box eval">評価制度<br><span style="font-size:0.7rem;font-weight:400;">能力の判定</span></div>
+      <div class="rel-arrow">→</div>
+      <div class="rel-box comp">報酬制度<br><span style="font-size:0.7rem;font-weight:400;">能力の対価</span></div>
+    </div>
+
+    <div class="note">
+      <strong>System as a Message</strong> &mdash; 制度設計そのものが「組織が何を大切にしているか」を語るメッセージである。曖昧さを排し、透明性と納得感を最大化することで、社員が自律的にキャリアを描ける環境を作る。
+    </div>
   </div>
 </section>
 
@@ -930,6 +1134,75 @@
       </tr>
     </tbody>
   </table>
+
+  <hr class="divider">
+
+  <!-- Annual Cycle -->
+  <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:1.5rem;">年間運用サイクル</h3>
+
+  <div class="annual-cycle">
+    <h4>半期サイクル（年2回評価） <span class="badge">6ヶ月 × 2</span></h4>
+
+    <!-- H1: First Half -->
+    <div class="timeline-row">
+      <div class="timeline-label">上期<br>(4月〜9月)</div>
+      <div class="timeline-track">
+        <div class="timeline-month highlight">4月<span class="tm-label">目標設定</span></div>
+        <div class="timeline-month active">5月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month active">6月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month special">7月<span class="tm-label">中間Review</span></div>
+        <div class="timeline-month active">8月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month special">9月<span class="tm-label">評価・FB</span></div>
+      </div>
+    </div>
+
+    <!-- H2: Second Half -->
+    <div class="timeline-row">
+      <div class="timeline-label">下期<br>(10月〜3月)</div>
+      <div class="timeline-track">
+        <div class="timeline-month highlight">10月<span class="tm-label">目標設定</span></div>
+        <div class="timeline-month active">11月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month active">12月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month special">1月<span class="tm-label">中間Review</span></div>
+        <div class="timeline-month active">2月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month special">3月<span class="tm-label">評価・FB</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flow Steps -->
+  <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:1.5rem;">評価運用フロー</h3>
+  <div class="eval-flow">
+    <div class="eval-flow-step ef-semi">
+      <div class="ef-icon">📋</div>
+      <h5>期初：目標設定</h5>
+      <p>ミッションレター作成<br>定量・定性目標の合意</p>
+    </div>
+    <div class="eval-flow-step ef-monthly">
+      <div class="ef-icon">💬</div>
+      <h5>毎月：1on1</h5>
+      <p>進捗確認<br>リアルタイムFB</p>
+    </div>
+    <div class="eval-flow-step ef-quarterly">
+      <div class="ef-icon">📊</div>
+      <h5>3ヶ月：中間Review</h5>
+      <p>仮評価の共有<br>軌道修正の機会</p>
+    </div>
+    <div class="eval-flow-step ef-semi">
+      <div class="ef-icon">⚖️</div>
+      <h5>期末：評価会議</h5>
+      <p>キャリブレーション<br>昇格判定</p>
+    </div>
+    <div class="eval-flow-step ef-semi">
+      <div class="ef-icon">🎯</div>
+      <h5>評価後：FB面談</h5>
+      <p>結果通達<br>来期への対話</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>期末のサプライズ禁止</strong> &mdash; 中間Reviewで着地見込みを必ず共有し、評価結果に対する「聞いていなかった」を防ぐ。フィードバック面談では結果通達は淡々と行い、時間の8割は「来期どうするか」の未来志向の対話に使う。
+  </div>
 </section>
 
 <!-- ═══════════ 04: COMPENSATION ═══════════ -->
