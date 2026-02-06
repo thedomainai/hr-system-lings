@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personnel OS | The Domain AI</title>
+  <title>LINGs人事制度 ver1.0 | The Domain AI</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,12 +14,17 @@
       --ink: #1a1a18;
       --ink-soft: #5c5a55;
       --ink-muted: #9e9b94;
-      --accent-think: #0066cc;
-      --accent-act: #cc4400;
-      --accent-rel: #7a3db8;
-      --accent-think-bg: #e8f0fa;
-      --accent-act-bg: #faf0e8;
-      --accent-rel-bg: #f0e8fa;
+      
+      /* Color definitions - Unified Base with Brightness variations */
+      --color-base: #1a1a18;
+      --accent-think: #1a1a18;
+      --accent-act: #4a4a48;
+      --accent-rel: #7a7a78;
+      
+      --accent-think-bg: #e8e8e6;
+      --accent-act-bg: #f0f0ee;
+      --accent-rel-bg: #f6f6f4;
+      
       --border: #d8d4cc;
       --border-light: #e8e4dd;
       --card: #ffffff;
@@ -643,9 +648,10 @@
 <nav class="topnav">
   <div class="topnav-inner">
     <div class="topnav-logo">
-      <span>H</span> Personnel OS v3.0
+      <span>L</span> LINGs Personnel OS v1.0
     </div>
     <div class="topnav-links">
+      <a href="#philosophy">設計思想</a>
       <a href="#overview">全体像</a>
       <a href="#grading">等級制度</a>
       <a href="#competency">コンピテンシー</a>
@@ -659,19 +665,81 @@
 <!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
   <div>
-    <h1>プロフェッショナルの<br>ための<em>OS</em></h1>
+    <h1>LINGs人事制度 ver1.0</h1>
   </div>
   <div class="hero-sub">
-    <strong>System as a Message</strong> &mdash; 制度の設計そのものが、組織が何を大切にしているかを語る。<br>
     等級制度・評価制度・報酬制度・運用マニュアルの全体像を、ここに公開する。
   </div>
 </section>
 
-<!-- ═══════════ 00: OVERVIEW ═══════════ -->
+<!-- ═══════════ 00: PHILOSOPHY ═══════════ -->
+<section class="section" id="philosophy">
+  <div class="section-head">
+    <span class="section-num">00</span>
+    <h2 class="section-title">設計思想</h2>
+  </div>
+  <p class="section-desc">
+    LINGsの人事制度は、単なる管理ツールではなく、私たちが何を大切にし、どのような組織を目指すかという意志を具現化したものである。
+  </p>
+
+  <!-- 3 Core Purposes -->
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2rem; margin-bottom: 3rem;">
+    <div class="card" style="padding: 1.5rem; text-align: center; border-top: 3px solid var(--ink);">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+      <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">頑張った人が報われる</h4>
+      <p style="font-size: 0.8rem; color: var(--ink-soft);">成果だけでなく、プロセスや能力開発を正当に評価する</p>
+    </div>
+    <div class="card" style="padding: 1.5rem; text-align: center; border-top: 3px solid var(--ink);">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📈</div>
+      <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">成長の可視化</h4>
+      <p style="font-size: 0.8rem; color: var(--ink-soft);">スキルアップや能力開発の進捗を実感できる</p>
+    </div>
+    <div class="card" style="padding: 1.5rem; text-align: center; border-top: 3px solid var(--ink);">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🗺️</div>
+      <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">キャリアパスを描ける</h4>
+      <p style="font-size: 0.8rem; color: var(--ink-soft);">次のステージに進むための要件が明確</p>
+    </div>
+  </div>
+
+  <div class="philosophy-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+    <div class="card" style="padding: 2rem;">
+      <h3 style="font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--accent-think);">① 仲間の貢献や頑張りへ報いる</h3>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
+        <li style="display: flex; align-items: flex-start; gap: 0.8rem;">
+          <span style="color: var(--accent-think);">●</span>
+          <div>適切な等級制度（等級制度）</div>
+        </li>
+        <li style="display: flex; align-items: flex-start; gap: 0.8rem;">
+          <span style="color: var(--accent-think);">●</span>
+          <div>適切な評価項目と評価ロジック（評価制度）</div>
+        </li>
+        <li style="display: flex; align-items: flex-start; gap: 0.8rem;">
+          <span style="color: var(--accent-think);">●</span>
+          <div>適切な報酬（報酬制度と機会報酬・成長報酬・金銭報酬）</div>
+        </li>
+      </ul>
+    </div>
+    <div class="card" style="padding: 2rem;">
+      <h3 style="font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--accent-act);">② 仲間の可能性を拡げる</h3>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
+        <li style="display: flex; align-items: flex-start; gap: 0.8rem;">
+          <span style="color: var(--accent-act);">●</span>
+          <div>目標→評価→フィードバックのサイクルの型化</div>
+        </li>
+        <li style="display: flex; align-items: flex-start; gap: 0.8rem;">
+          <span style="color: var(--accent-act);">●</span>
+          <div>誰もがこのフレームを品質高く実践できる状態の実現</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 01: OVERVIEW ═══════════ -->
 <section class="section" id="overview" style="background: var(--bg-alt); margin: 0 auto; max-width: 100%; padding-left: calc((100% - 1280px)/2 + 2rem); padding-right: calc((100% - 1280px)/2 + 2rem);">
   <div style="max-width: 1280px;">
     <div class="section-head">
-      <span class="section-num">00</span>
+      <span class="section-num">01</span>
       <h2 class="section-title">人事制度の全体像</h2>
     </div>
     <p class="section-desc">
@@ -723,17 +791,13 @@
       <div class="rel-arrow">→</div>
       <div class="rel-box comp">報酬制度<br><span style="font-size:0.7rem;font-weight:400;">能力の対価</span></div>
     </div>
-
-    <div class="note">
-      <strong>System as a Message</strong> &mdash; 制度設計そのものが「組織が何を大切にしているか」を語るメッセージである。曖昧さを排し、透明性と納得感を最大化することで、社員が自律的にキャリアを描ける環境を作る。
-    </div>
   </div>
 </section>
 
-<!-- ═══════════ 01: GRADING ═══════════ -->
+<!-- ═══════════ 02: GRADING ═══════════ -->
 <section class="section" id="grading">
   <div class="section-head">
-    <span class="section-num">01</span>
+    <span class="section-num">02</span>
     <h2 class="section-title">等級制度 &mdash; Grade &amp; Scope</h2>
   </div>
   <p class="section-desc">
@@ -744,7 +808,7 @@
   <div class="triad">
     <div class="card triad-card think">
       <div class="card-label">Domain 1</div>
-      <h3>思考・構想</h3>
+      <h3>知力（戦略）</h3>
       <p>状況を観察し「何を解決すべきか」を定義し、複雑な事象を構造化して解決への道筋を描く力。</p>
       <div class="triad-tags">
         <span class="triad-tag">A. 課題設定</span>
@@ -753,7 +817,7 @@
     </div>
     <div class="card triad-card act">
       <div class="card-label">Domain 2</div>
-      <h3>実行・行動</h3>
+      <h3>動力（エグゼキューション）</h3>
       <p>意思決定から実行完了までのサイクルを最大化させ、高い専門性で圧倒的な速度と品質を両立させる力。</p>
       <div class="triad-tags">
         <span class="triad-tag">C. スピード</span>
@@ -762,7 +826,7 @@
     </div>
     <div class="card triad-card rel">
       <div class="card-label">Domain 3</div>
-      <h3>影響・対人</h3>
+      <h3>対人折衝力（コミュニケーション）</h3>
       <p>相手の意図や組織の文脈を深く汲み取り、自身のビジョンを言語化して他者の納得と行動を引き出す力。</p>
       <div class="triad-tags">
         <span class="triad-tag">E. 受信・傾聴</span>
@@ -777,7 +841,7 @@
       <tr>
         <th style="width:6%">Grade</th>
         <th style="width:12%">役割名称</th>
-        <th style="width:18%">Scope of Impact</th>
+        <th style="width:18%">影響の規模</th>
         <th>責任・影響の範囲</th>
       </tr>
     </thead>
@@ -847,9 +911,9 @@
 
     <!-- Tabs -->
     <div class="comp-tabs">
-      <button class="comp-tab think active" onclick="switchTab('think')">思考・構想</button>
-      <button class="comp-tab act" onclick="switchTab('act')">実行・行動</button>
-      <button class="comp-tab rel" onclick="switchTab('rel')">影響・対人</button>
+      <button class="comp-tab think active" onclick="switchTab('think')">知力（戦略）</button>
+      <button class="comp-tab act" onclick="switchTab('act')">動力（エグゼキューション）</button>
+      <button class="comp-tab rel" onclick="switchTab('rel')">対人折衝力（コミュニケーション）</button>
     </div>
 
     <!-- Panel: Thinking -->
@@ -1046,40 +1110,21 @@
   </div>
 </section>
 
-<!-- ═══════════ 03: EVALUATION ═══════════ -->
+<!-- ═══════════ 04: EVALUATION ═══════════ -->
 <section class="section" id="evaluation">
   <div class="section-head">
-    <span class="section-num">03</span>
+    <span class="section-num">04</span>
     <h2 class="section-title">評価制度 &mdash; 卒業要件方式</h2>
   </div>
   <p class="section-desc">
     昇格は他者との比較（相対評価）ではなく、現グレードに定められた要件を完全に満たし、次のステージへ進む準備ができているか（<strong>絶対評価</strong>）を判定する。3つのゲートをすべてクリアした者のみが昇格候補となる。
   </p>
 
-  <!-- 3 Gates -->
+  <!-- 3 Gates - Priority Order: Competency (Main) → Results → Behavior (Gating) -->
   <div class="eval-gates">
-    <div class="card gate-card gate-ticket">
+    <div class="card gate-card gate-grad" style="border: 2px solid var(--ink);">
       <div class="gate-num">01</div>
-      <h3>成果（結果）評価</h3>
-      <div class="gate-en">The Ticket</div>
-      <p style="font-size:0.85rem; color:var(--ink-soft);">
-        期間内に合意した目標（MBO/OKR等）に対する達成度。<br>
-        判定: ⚪︎（達成）・△（概ね達成）・×（未達）
-      </p>
-      <div class="gate-req">要件: ⚪︎ 以上 &mdash; ×は即足切り</div>
-    </div>
-    <div class="card gate-card gate-keeper">
-      <div class="gate-num">02</div>
-      <h3>振る舞い（バリュー）評価</h3>
-      <div class="gate-en">The Gatekeeper</div>
-      <p style="font-size:0.85rem; color:var(--ink-soft);">
-        組織の行動規範（バリュー）の体現度。<br>
-        判定: ⚪︎（体現）・△（一部課題）・×（乖離）
-      </p>
-      <div class="gate-req">要件: ⚪︎ 以上 &mdash; ×は即足切り</div>
-    </div>
-    <div class="card gate-card gate-grad">
-      <div class="gate-num">03</div>
+      <div class="gate-badge" style="display:inline-block; font-size:0.65rem; font-weight:700; padding:0.2rem 0.6rem; background:var(--ink); color:var(--bg); border-radius:3px; margin-bottom:0.5rem;">評価本体</div>
       <h3>コンピテンシー評価</h3>
       <div class="gate-en">Graduation Requirement</div>
       <p style="font-size:0.85rem; color:var(--ink-soft);">
@@ -1087,6 +1132,31 @@
         採点: 1〜5点の5段階評価
       </p>
       <div class="gate-req">要件: 3領域すべてで 4点以上</div>
+    </div>
+    <div class="card gate-card gate-ticket">
+      <div class="gate-num">02</div>
+      <div class="gate-badge" style="display:inline-block; font-size:0.65rem; font-weight:500; padding:0.2rem 0.6rem; background:var(--bg-alt); color:var(--ink-soft); border-radius:3px; margin-bottom:0.5rem;">足切り条件</div>
+      <h3>成果評価</h3>
+      <div class="gate-en">The Ticket</div>
+      <p style="font-size:0.85rem; color:var(--ink-soft);">
+        期間内に合意した目標（MBO/OKR等）に対する達成度。<br>
+        判定: ⚪︎（達成）・△（概ね達成）・×（未達）
+      </p>
+      <div class="gate-req">要件: ⚪︎ 以上 &mdash; ×は即足切り</div>
+      <div class="gate-note" style="font-size:0.75rem; color:var(--ink-muted); margin-top:0.8rem; padding-top:0.8rem; border-top:1px dashed var(--border-light);">
+        ※外部要因等で成果が出なかった場合は救済あり。能力開発を重視。
+      </div>
+    </div>
+    <div class="card gate-card gate-keeper">
+      <div class="gate-num">03</div>
+      <div class="gate-badge" style="display:inline-block; font-size:0.65rem; font-weight:500; padding:0.2rem 0.6rem; background:var(--bg-alt); color:var(--ink-soft); border-radius:3px; margin-bottom:0.5rem;">足切り条件</div>
+      <h3>振る舞い（バリュー）評価</h3>
+      <div class="gate-en">The Gatekeeper</div>
+      <p style="font-size:0.85rem; color:var(--ink-soft);">
+        組織の行動規範（バリュー）の体現度。<br>
+        判定: ⚪︎（体現）・△（一部課題）・×（乖離）
+      </p>
+      <div class="gate-req">要件: ⚪︎ 以上 &mdash; ×は即足切り</div>
     </div>
   </div>
 
@@ -1143,58 +1213,58 @@
   <div class="annual-cycle">
     <h4>半期サイクル（年2回評価） <span class="badge">6ヶ月 × 2</span></h4>
 
-    <!-- H1: First Half -->
+    <!-- H1: First Half (Dec-May) -->
     <div class="timeline-row">
-      <div class="timeline-label">上期<br>(4月〜9月)</div>
+      <div class="timeline-label">上期<br>(12月〜5月)</div>
       <div class="timeline-track">
-        <div class="timeline-month highlight">4月<span class="tm-label">目標設定</span></div>
-        <div class="timeline-month active">5月<span class="tm-label">1on1</span></div>
-        <div class="timeline-month active">6月<span class="tm-label">1on1</span></div>
-        <div class="timeline-month special">7月<span class="tm-label">中間Review</span></div>
-        <div class="timeline-month active">8月<span class="tm-label">1on1</span></div>
-        <div class="timeline-month special">9月<span class="tm-label">評価・FB</span></div>
+        <div class="timeline-month highlight">12月<span class="tm-label">目標設定</span></div>
+        <div class="timeline-month active">1月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month active">2月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month special">3月<span class="tm-label">中間Review</span></div>
+        <div class="timeline-month active">4月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month special">5月<span class="tm-label">評価・FB</span></div>
       </div>
     </div>
 
-    <!-- H2: Second Half -->
+    <!-- H2: Second Half (Jun-Nov) -->
     <div class="timeline-row">
-      <div class="timeline-label">下期<br>(10月〜3月)</div>
+      <div class="timeline-label">下期<br>(6月〜11月)</div>
       <div class="timeline-track">
-        <div class="timeline-month highlight">10月<span class="tm-label">目標設定</span></div>
-        <div class="timeline-month active">11月<span class="tm-label">1on1</span></div>
-        <div class="timeline-month active">12月<span class="tm-label">1on1</span></div>
-        <div class="timeline-month special">1月<span class="tm-label">中間Review</span></div>
-        <div class="timeline-month active">2月<span class="tm-label">1on1</span></div>
-        <div class="timeline-month special">3月<span class="tm-label">評価・FB</span></div>
+        <div class="timeline-month highlight">6月<span class="tm-label">目標設定</span></div>
+        <div class="timeline-month active">7月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month active">8月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month special">9月<span class="tm-label">中間Review</span></div>
+        <div class="timeline-month active">10月<span class="tm-label">1on1</span></div>
+        <div class="timeline-month special">11月<span class="tm-label">評価・FB</span></div>
       </div>
     </div>
   </div>
 
   <!-- Flow Steps -->
-  <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:1.5rem;">評価運用フロー</h3>
+  <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:1rem;">評価運用フロー</h3>
   <div class="eval-flow">
     <div class="eval-flow-step ef-semi">
-      <div class="ef-icon">📋</div>
+      <div class="ef-icon"></div>
       <h5>期初：目標設定</h5>
       <p>ミッションレター作成<br>定量・定性目標の合意</p>
     </div>
     <div class="eval-flow-step ef-monthly">
-      <div class="ef-icon">💬</div>
+      <div class="ef-icon"></div>
       <h5>毎月：1on1</h5>
       <p>進捗確認<br>リアルタイムFB</p>
     </div>
     <div class="eval-flow-step ef-quarterly">
-      <div class="ef-icon">📊</div>
+      <div class="ef-icon"></div>
       <h5>3ヶ月：中間Review</h5>
       <p>仮評価の共有<br>軌道修正の機会</p>
     </div>
     <div class="eval-flow-step ef-semi">
-      <div class="ef-icon">⚖️</div>
+      <div class="ef-icon"></div>
       <h5>期末：評価会議</h5>
       <p>キャリブレーション<br>昇格判定</p>
     </div>
     <div class="eval-flow-step ef-semi">
-      <div class="ef-icon">🎯</div>
+      <div class="ef-icon"></div>
       <h5>評価後：FB面談</h5>
       <p>結果通達<br>来期への対話</p>
     </div>
@@ -1205,11 +1275,11 @@
   </div>
 </section>
 
-<!-- ═══════════ 04: COMPENSATION ═══════════ -->
+<!-- ═══════════ 05: COMPENSATION ═══════════ -->
 <section class="section" id="compensation" style="background: var(--bg-alt); margin: 0 auto; max-width: 100%; padding-left: calc((100% - 1280px)/2 + 2rem); padding-right: calc((100% - 1280px)/2 + 2rem);">
   <div style="max-width: 1280px;">
     <div class="section-head">
-      <span class="section-num">04</span>
+      <span class="section-num">05</span>
       <h2 class="section-title">報酬制度 &mdash; Total Rewards</h2>
     </div>
     <p class="section-desc">
@@ -1306,10 +1376,10 @@
   </div>
 </section>
 
-<!-- ═══════════ 05: OPERATION ═══════════ -->
+<!-- ═══════════ 06: OPERATION ═══════════ -->
 <section class="section" id="operation">
   <div class="section-head">
-    <span class="section-num">05</span>
+    <span class="section-num">06</span>
     <h2 class="section-title">運用マニュアル</h2>
   </div>
   <p class="section-desc">
