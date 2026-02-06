@@ -135,7 +135,7 @@
     .triad-card.rel { border-color: rgba(122,61,184,0.15); }
     .triad-card.rel::before { background: var(--accent-rel); }
     .triad-card.rel .card-label { color: var(--accent-rel); }
-    .triad-tags { display: flex; gap: 0.4rem; margin-top: 1rem; }
+    .triad-tags { display: flex; gap: 0.4rem; margin: 0.8rem 0; }
     .triad-tag {
       font-size: 0.7rem; font-weight: 500; padding: 0.2rem 0.6rem;
       border-radius: 3px;
@@ -683,26 +683,7 @@
     LINGsの人事制度は、単なる管理ツールではなく、私たちが何を大切にし、どのような組織を目指すかという意志を具現化したものである。
   </p>
 
-  <!-- 3 Core Purposes -->
-  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2rem; margin-bottom: 3rem;">
-    <div class="card" style="padding: 1.5rem; text-align: center; border-top: 3px solid var(--ink);">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
-      <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">頑張った人が報われる</h4>
-      <p style="font-size: 0.8rem; color: var(--ink-soft);">成果だけでなく、プロセスや能力開発を正当に評価する</p>
-    </div>
-    <div class="card" style="padding: 1.5rem; text-align: center; border-top: 3px solid var(--ink);">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📈</div>
-      <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">成長の可視化</h4>
-      <p style="font-size: 0.8rem; color: var(--ink-soft);">スキルアップや能力開発の進捗を実感できる</p>
-    </div>
-    <div class="card" style="padding: 1.5rem; text-align: center; border-top: 3px solid var(--ink);">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🗺️</div>
-      <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">キャリアパスを描ける</h4>
-      <p style="font-size: 0.8rem; color: var(--ink-soft);">次のステージに進むための要件が明確</p>
-    </div>
-  </div>
-
-  <div class="philosophy-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+  <div class="philosophy-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem;">
     <div class="card" style="padding: 2rem;">
       <h3 style="font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--accent-think);">① 仲間の貢献や頑張りへ報いる</h3>
       <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
@@ -802,7 +783,7 @@
     <h2 class="section-title">等級制度 &mdash; Grade &amp; Scope</h2>
   </div>
   <p class="section-desc">
-    等級（グレード）は役職任命とは独立しており、<strong>責任範囲（スコープ）</strong>においてコンピテンシーが発揮されているかで判定される。「何ができるか」ではなく「どの範囲に影響を与えているか」が基準となる。
+    等級（グレード）は役職任命とは独立している。等級は<strong>責任範囲（スコープ）</strong>においてコンピテンシーが発揮されているかで判定される。「何ができるか」ではなく「どの範囲に対してコンピテンシーが発揮されているか」が評価基準となる。
   </p>
 
   <!-- Competency Triad -->
@@ -810,29 +791,29 @@
     <div class="card triad-card think">
       <div class="card-label">Domain 1</div>
       <h3>知力（戦略）</h3>
-      <p>状況を観察し「何を解決すべきか」を定義し、複雑な事象を構造化して解決への道筋を描く力。</p>
       <div class="triad-tags">
         <span class="triad-tag">A. 課題設定</span>
         <span class="triad-tag">B. 構造化・計画</span>
       </div>
+      <p>状況を観察し「何を解決すべきか」を定義し、複雑な事象を構造化して解決への道筋を描く力。</p>
     </div>
     <div class="card triad-card act">
       <div class="card-label">Domain 2</div>
       <h3>動力（エグゼキューション）</h3>
-      <p>意思決定から実行完了までのサイクルを最大化させ、高い専門性で圧倒的な速度と品質を両立させる力。</p>
       <div class="triad-tags">
         <span class="triad-tag">C. スピード</span>
         <span class="triad-tag">D. 品質</span>
       </div>
+      <p>意思決定から実行完了までのサイクルを最大化させ、高い専門性で圧倒的な速度と品質を両立させる力。</p>
     </div>
     <div class="card triad-card rel">
       <div class="card-label">Domain 3</div>
       <h3>対人折衝力（コミュニケーション）</h3>
-      <p>相手の意図や組織の文脈を深く汲み取り、自身のビジョンを言語化して他者の納得と行動を引き出す力。</p>
       <div class="triad-tags">
         <span class="triad-tag">E. 受信・傾聴</span>
         <span class="triad-tag">F. 発信・伝達</span>
       </div>
+      <p>相手の意図や組織の文脈を深く汲み取り、自身のビジョンを言語化して他者の納得と行動を引き出す力。</p>
     </div>
   </div>
 
